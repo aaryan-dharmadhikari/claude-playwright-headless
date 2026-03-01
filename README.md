@@ -69,17 +69,19 @@ First argument is the project directory (defaults to `.`). Everything after is f
 └─────────────────────────────────────────────┘
 ```
 
-### Protected
+### Restricted
 
-- Host filesystem outside the project directory
-- System configuration
-- Other projects, home directory files
+- **Filesystem**: Claude cannot read, write, or delete anything outside the mounted project directory. Your home directory, other projects, system files, SSH keys, dotfiles, etc. are all inaccessible.
+- **Processes**: Claude cannot see or interact with host processes. It can only run processes inside the container.
+- **Destructive commands**: `rm -rf /` or similar only affects the ephemeral container — the host is untouched.
+- **Permission prompts**: There are none (`--dangerously-skip-permissions`), but the blast radius is limited to the project directory.
 
-### Allowed
+### Not restricted
 
-- Full read-write to the mounted project
-- Network access (pip, npm, APIs, browsing)
-- Claude auth and session state persistence
+- **Project directory**: Claude has full read-write access to everything in the mounted project. It can create, edit, and delete any file there.
+- **Network**: Unrestricted. Claude can make HTTP requests, install packages (pip, npm), call APIs, browse the web via Playwright, and access any external service.
+- **Claude state**: `~/.claude/` and `~/.claude.json` are mounted read-write so auth and session state persist between runs.
+- **Git operations**: Claude can commit, push, and pull within the project. However, `gh` CLI is not pre-authenticated inside the container (see Gotchas).
 
 ## Playwright MCP
 
