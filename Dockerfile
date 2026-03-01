@@ -6,7 +6,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     git curl wget ripgrep fd-find jq \
     python3 python3-pip python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -LsSf https://astral.sh/uv/install.sh | UV_INSTALL_DIR=/usr/local/bin sh
 
 # Node.js (for MCP servers via npx)
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \

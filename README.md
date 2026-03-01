@@ -8,7 +8,7 @@ Claude gets full access to your project directory and a headless Chromium browse
 
 | Tool | Purpose |
 |------|---------|
-| Python 3, pip, venv | Python development |
+| Python 3, pip, uv, venv | Python development |
 | Node.js 22, npm | JS/TS development, MCP servers |
 | git, gh | Version control, GitHub operations |
 | ripgrep, fd, jq, curl | Search and scripting |
